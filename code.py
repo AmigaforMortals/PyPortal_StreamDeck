@@ -88,7 +88,7 @@ def load_page_1():
         elif p[0] >160 and p[0] <240:
             key_press(btn3)
         # Button 4
-        else:
+        elif p[0] >240:
             key_press(btn4)
     #if touch is on middle row
     elif p[1] > 80 and p[1] <160:
@@ -102,10 +102,10 @@ def load_page_1():
         elif p[0] >160 and p[0] <240:
             key_press(btn7)
         # Button 8
-        else:
+        elif p[0] >240:
             key_press(btn8)
     # if touch is on Bottom row
-    else:
+    elif p[1] >160:
         # Button 9
         #if p[0] <80:
             #key_press(btn9)
@@ -116,7 +116,7 @@ def load_page_1():
         elif p[0] >160 and p[0] <240:
             key_press(btn11)
         # Button 12
-        else:
+        elif p[0] >240:
             key_press(btn12)
 
 def load_page_2():
@@ -132,7 +132,7 @@ def load_page_2():
         elif p[0] >160 and p[0] <240:
             key_press(btn15)
         # Button 4
-        else:
+        elif p[0] >240:
             key_press(btn16)
     #if touch is on middle row
     elif p[1] > 80 and p[1] <160:
@@ -146,10 +146,10 @@ def load_page_2():
         elif p[0] >160 and p[0] <240:
             key_press(btn19)
         # Button 8
-        else:
+        elif p[0] >240:
             key_press(btn20)
     # if touch is on Bottom row
-    else:
+    elif p[1] >160:
         # Button 9
         #if p[0] <80:
             #key_press(btn21)
@@ -160,11 +160,11 @@ def load_page_2():
         elif p[0] >160 and p[0] <240:
             key_press(btn23)
         # Button 12
-        else:
+        elif p[0] >240:
             key_press(btn24)
 
 # must wait at least this long between touch events
-TOUCH_COOLDOWN = 0.5  # seconds
+TOUCH_COOLDOWN = 0.1  # seconds
 
 #time.sleep(1)
 keyboard = Keyboard(usb_hid.devices)
@@ -187,16 +187,20 @@ while True:
         if p and not _previous_touch:
             # store the time to compare with next iteration
             _previous_touch_time = _now
-	    load_page_1()
-	    if p[1] >160 and p[0] <80:
+            if p[1] <160 or p[0] >80:
                 if _page_number<=1:
+                    load_page_1()
+	        elif _page_number>=2:
+        	    load_page_2()
+            elif p[1] >160 and p[0] <80:
+                if _page_number<=1:
+                    load_page_2()
                     set_image(btn_group,"/images/Buttons2.bmp")
 		    _page_number=2
-        	    load_page_2()
 	        elif _page_number>=2:
+        	    load_page_2()
 		    set_image(btn_group,"/images/Buttons.bmp")
 		    _page_number=1
-        	    load_page_1()
 
     # store previous touch event t compare with next iteration
     _previous_touch = p
