@@ -187,6 +187,7 @@ while True:
         if p and not _previous_touch:
             # store the time to compare with next iteration
             _previous_touch_time = _now
+	    load_page_1()
 	    if p[1] >160 and p[0] <80:
                 if _page_number<=1:
                     set_image(btn_group,"/images/Buttons2.bmp")
