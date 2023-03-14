@@ -134,15 +134,13 @@ while True:
         continue
 
     # work out which row/col has been pressed
-    touchX = math.floor(p[0] / (board.DISPLAY.width / BTN_COLS))
-    touchY = math.floor(p[1] / (board.DISPLAY.height / BTN_ROWS))
+    touchX = math.floor(currentTouch[0] / (board.DISPLAY.width / BTN_COLS))
+    touchY = math.floor(currentTouch[1] / (board.DISPLAY.height / BTN_ROWS))
 
     currentKeyCodes = BTN_PAGE_MAP[currentPage][touchX][touchY]
 
     # send key press/release for row/col
-    keyboard.send(
-        getattr(Keycode, currentKeyCodes)
-    )
+    keyboard.send(currentKeyCodes)
 
     # store the time/touch event to compare against next iteration
     previousTouchTime = currentTime
