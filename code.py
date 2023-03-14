@@ -109,7 +109,9 @@ touchScreen = adafruit_touchscreen.Touchscreen(
 )
 
 # Show splash image on startup
-pyportal = PyPortal(IMG_PATH_SPLASH)
+pyportal = PyPortal(
+    default_bg = IMG_PATH_SPLASH
+)
 
 # Initialise button image group
 btn_group = displayio.Group()
