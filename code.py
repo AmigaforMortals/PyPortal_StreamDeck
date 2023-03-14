@@ -45,20 +45,20 @@ BTN_PAGE_MAP = [
 def setPage(index):
     global currentPage
 
-    if not value in IMG_PATH_BTNS:
+    if not index in IMG_PATH_PAGES:
         return
 
     currentPage = index
 
-    if group:
-        group.pop()
+    if btnGroup:
+        btnGroup.pop()
 
     # Load current page button bitmap
     image = displayio.OnDiskBitmap(
-        open(IMG_PATH_BTNS[currentPage], "rb")
+        open(IMG_PATH_PAGES[currentPage], "rb")
     )
 
-    group.append(
+    btnGroup.append(
         displayio.TileGrid(
             image,
             getattr(
@@ -69,16 +69,16 @@ def setPage(index):
         )
     )
 
-    board.DISPLAY.show(btn_group)
+    board.DISPLAY.show(btnGroup)
 
 def prevPage():
     if currentPage > 0:
         setPage(currentPage - 1)
     else:
-        setPage(len(IMG_PATH_BTNS) - 1)
+        setPage(len(IMG_PATH_PAGES) - 1)
 
 def nextPage():
-    if currentPage < len(IMG_PATH_BTNS) - 1:
+    if currentPage < len(IMG_PATH_PAGES) - 1:
         setPage(currentPage + 1)
     else:
         setPage(0)
@@ -114,7 +114,7 @@ pyportal = PyPortal(
 )
 
 # Initialise button image group
-btn_group = displayio.Group()
+btnGroup = displayio.Group()
 
 setPage(currentPage)
 
