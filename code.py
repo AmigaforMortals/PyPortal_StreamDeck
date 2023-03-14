@@ -44,30 +44,32 @@ board.DISPLAY.show(btn_group)
 set_image(btn_group,"/images/Buttons.bmp")
 
 # Set buttons
-btn1 = Keycode.A
-btn2 = Keycode.B
-btn3 = Keycode.C
-btn4 = Keycode.D
-btn5 = Keycode.E
-btn6 = Keycode.F
-btn7 = Keycode.G
-btn8 = Keycode.H
-btn9 = Keycode.I
-btn10 = Keycode.J
-btn11 = Keycode.K
-btn12 = Keycode.L
-btn13 = Keycode.M
-btn14 = Keycode.N
-btn15 = Keycode.O
-btn16 = Keycode.P
-btn17 = Keycode.Q
-btn18 = Keycode.R
-btn19 = Keycode.S
-btn20 = Keycode.T
-btn21 = Keycode.U
-btn22 = Keycode.V
-btn23 = Keycode.W
-btn24 = Keycode.X
+btn1 = Keycode.F14 #Main Amiga Stream
+btn2 = Keycode.F16 #Full Screen Cam
+btn3 = Keycode.F20 #Ads
+btn4 = Keycode.F21 #Outro
+btn5 = Keycode.F18 #Discord
+btn6 = Keycode.F13 #Game On SFX
+btn7 = Keycode.F22 #Play/Pause Bed Track
+btn8 = Keycode.F23 #Mute/Unmute Mic
+btn9 = Keycode.I #Switch Page
+btn10 = Keycode.F17 #Cheer SFX
+btn11 = Keycode.F15 #Welcome SFX
+btn12 = Keycode.F19 #Death Counter
+
+#All hotkeys below will have SHIFT held down for keypress
+btn13 = Keycode.F13 #Intro Transition
+btn14 = Keycode.F21 #Large Gear Cam
+btn15 = Keycode.F22 #Room Cam
+btn16 = Keycode.F20 #BRB
+btn17 = Keycode.F23 #Chewy SFX
+btn18 = Keycode.F14 #Release Them All
+btn19 = Keycode.F24 #Fatality SFX
+btn20 = Keycode.F15 #Atari (Disgusting) SFX
+btn21 = Keycode.U #Switch Page
+btn22 = Keycode.F18 #Phrasing SFX
+btn23 = Keycode.F16 #Only Amiga SFX
+btn24 = Keycode.F19 #Reset Deaths
 
 def key_press(btn_num):
     keyboard.press(btn_num)
@@ -189,18 +191,20 @@ while True:
             _previous_touch_time = _now
             if p[1] <160 or p[0] >80:
                 if _page_number<=1:
+                    keyboard.release(Keycode.SHIFT)
                     load_page_1()
 	        elif _page_number>=2:
+                    keyboard.press(Keycode.SHIFT)
         	    load_page_2()
             elif p[1] >160 and p[0] <80:
                 if _page_number<=1:
-                    load_page_2()
                     set_image(btn_group,"/images/Buttons2.bmp")
 		    _page_number=2
 	        elif _page_number>=2:
-        	    load_page_2()
+                    keyboard.release(Keycode.SHIFT)
 		    set_image(btn_group,"/images/Buttons.bmp")
 		    _page_number=1
 
     # store previous touch event t compare with next iteration
     _previous_touch = p
+
