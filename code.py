@@ -98,11 +98,11 @@ touchScreen = adafruit_touchscreen.Touchscreen(
     board.TOUCH_XR,
     board.TOUCH_YD,
     board.TOUCH_YU,
-    (
+    calibration = (
         (5200, 59000),
         (5800, 57000)
     ),
-    (
+    size = (
         board.DISPLAY.width,
         board.DISPLAY.height
     )
