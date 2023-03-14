@@ -1,6 +1,7 @@
 import adafruit_touchscreen
 import board
 import displayio
+import math
 import time
 import usb_hid
 
