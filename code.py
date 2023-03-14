@@ -42,7 +42,7 @@ BTN_PAGE_MAP = [
 ]
 
 # Functions
-def setPage(index)
+def setPage(index):
     global currentPage
 
     if not value in IMG_PATH_BTNS:
@@ -71,13 +71,13 @@ def setPage(index)
 
     board.DISPLAY.show(btn_group)
 
-def prevPage()
+def prevPage():
     if currentPage > 0:
         setPage(currentPage - 1)
     else:
         setPage(len(IMG_PATH_BTNS) - 1)
 
-def nextPage()
+def nextPage():
     if currentPage < len(IMG_PATH_BTNS) - 1:
         setPage(currentPage + 1)
     else:
@@ -103,7 +103,7 @@ touchScreen = adafruit_touchscreen.Touchscreen(
         (5800, 57000)
     ),
     (
-        board.DISPLAY.width
+        board.DISPLAY.width,
         board.DISPLAY.height
     )
 )
@@ -123,7 +123,7 @@ while True:
     currentTouch = touchScreen.touch_point
 
     # skip if still in touch cooldown
-    if currentTime < (previousTouchTime + TOUCH_COOLDOWN)
+    if currentTime < (previousTouchTime + TOUCH_COOLDOWN):
         continue
 
     # skip if current touch matches last touch
