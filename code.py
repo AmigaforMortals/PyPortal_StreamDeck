@@ -14,7 +14,7 @@ from adafruit_pyportal import PyPortal
 # Configuration
 BTN_COLS = 4
 BTN_ROWS = 3
-TOUCH_COOLDOWN = 0.1  # minimum amount of seconds to wait between touch events
+TOUCH_COOLDOWN = 0.2  # minimum amount of seconds to wait between touch events
 
 IMG_PATH_SPLASH = '/images/Splash.bmp'
 
@@ -28,17 +28,17 @@ BTN_PAGE_MAP = [
     [
         [Keycode.A, Keycode.B, Keycode.C, Keycode.D],
         [Keycode.E, Keycode.F, Keycode.G, Keycode.H],
-        [Keycode.I, Keycode.J, Keycode.K, Keycode.L],
+        ['prevPage', Keycode.J, Keycode.K, 'nextPage'],
     ],
     [
         [Keycode.M, Keycode.N, Keycode.O, Keycode.P],
         [Keycode.Q, Keycode.R, Keycode.S, Keycode.T],
-        [Keycode.U, Keycode.V, Keycode.W, Keycode.X],
+        ['prevPage', Keycode.V, Keycode.W, 'nextPage'],
     ],
     [
         [(Keycode.SHIFT, Keycode.A), (Keycode.SHIFT, Keycode.B), (Keycode.SHIFT, Keycode.C), (Keycode.SHIFT, Keycode.D)],
         [(Keycode.SHIFT, Keycode.E), (Keycode.SHIFT, Keycode.F), (Keycode.SHIFT, Keycode.G), (Keycode.SHIFT, Keycode.H)],
-        [(Keycode.SHIFT, Keycode.I), (Keycode.SHIFT, Keycode.J), (Keycode.SHIFT, Keycode.K), (Keycode.SHIFT, Keycode.L)],
+        ['prevPage', (Keycode.SHIFT, Keycode.J), (Keycode.SHIFT, Keycode.K), 'nextPage'],
     ],
 ]
 
@@ -137,10 +137,14 @@ while True:
     touchX = math.floor(currentTouch[0] / (board.DISPLAY.width / BTN_COLS))
     touchY = math.floor(currentTouch[1] / (board.DISPLAY.height / BTN_ROWS))
 
-    currentKeyCodes = BTN_PAGE_MAP[currentPage][touchX][touchY]
+    currentKeyCodes = BTN_PAGE_MAP[currentPage][touchY][touchX]
 
     # send press/release for key(s) defined in row/col
-    if type(currentKeyCodes) in [list, tuple]:
+    if currentKeyCodes == 'prevPage':
+        prevPage()
+    elif currentKeyCodes == 'nextPage':
+        nextPage()
+    elif type(currentKeyCodes) in [list, tuple]:
         keyboard.send(*currentKeyCodes)
     else:
         keyboard.send(currentKeyCodes)
