@@ -62,7 +62,7 @@ def setPage(index):
     btnGroup.append(
         displayio.TileGrid(
             image,
-            getattr(
+            pixel_shader = getattr(
                 image,
                 'pixel_shader',
                 displayio.ColorConverter()
