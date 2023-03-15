@@ -46,7 +46,7 @@ BTN_PAGE_MAP = [
 def setPage(index):
     global currentPage
 
-    if not index in IMG_PATH_PAGES:
+    if index >= len(IMG_PATH_PAGES):
         return
 
     currentPage = index
