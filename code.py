@@ -139,8 +139,11 @@ while True:
 
     currentKeyCodes = BTN_PAGE_MAP[currentPage][touchX][touchY]
 
-    # send key press/release for row/col
-    keyboard.send(currentKeyCodes)
+    # send press/release for key(s) defined in row/col
+    if type(currentKeyCodes) in [list, tuple]:
+        keyboard.send(*currentKeyCodes)
+    else:
+        keyboard.send(currentKeyCodes)
 
     # store the time/touch event to compare against next iteration
     previousTouchTime = currentTime
