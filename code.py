@@ -1,128 +1,154 @@
-import time
+import adafruit_touchscreen
 import board
 import displayio
-from adafruit_button import Button
-from adafruit_pyportal import PyPortal
-import adafruit_touchscreen
+import math
+import time
 import usb_hid
+
+from adafruit_button import Button
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
 from adafruit_hid.keycode import Keycode
+from adafruit_pyportal import PyPortal
 
-# -------Rotate 0:
-SIZE = (320, 240)
-ts = adafruit_touchscreen.Touchscreen(board.TOUCH_XL, board.TOUCH_XR,
-                                      board.TOUCH_YD, board.TOUCH_YU,
-                                      calibration=((5200, 59000), (5800, 57000)),
-                                      size=(320, 240))
+# Configuration
+BTN_COLS = 4
+BTN_ROWS = 3
+TOUCH_COOLDOWN = 0.2  # minimum amount of seconds to wait between touch events
 
-# Show AfM splash screen on startup
-pyportal = PyPortal(default_bg="/images/AfM_StreamDeck.bmp")
+IMG_PATH_SPLASH = '/images/Splash.bmp'
 
-# Load 
-group = displayio.Group()
-#group.x = 0
-#group.y = 0
+IMG_PATH_PAGES = [
+    '/images/Page1.bmp',
+    '/images/Page2.bmp',
+    '/images/Page3.bmp',
+]
 
-image_file = open("/images/Buttons.bmp", "rb")
-image = displayio.OnDiskBitmap(image_file)
-image_sprite = displayio.TileGrid(image, pixel_shader=getattr(image, 'pixel_shader', displayio.ColorConverter()))
+BTN_PAGE_MAP = [
+    [
+        [Keycode.A, Keycode.B, Keycode.C, Keycode.D],
+        [Keycode.E, Keycode.F, Keycode.G, Keycode.H],
+        ['prevPage', Keycode.J, Keycode.K, 'nextPage'],
+    ],
+    [
+        [Keycode.M, Keycode.N, Keycode.O, Keycode.P],
+        [Keycode.Q, Keycode.R, Keycode.S, Keycode.T],
+        ['prevPage', Keycode.V, Keycode.W, 'nextPage'],
+    ],
+    [
+        [(Keycode.SHIFT, Keycode.A), (Keycode.SHIFT, Keycode.B), (Keycode.SHIFT, Keycode.C), (Keycode.SHIFT, Keycode.D)],
+        [(Keycode.SHIFT, Keycode.E), (Keycode.SHIFT, Keycode.F), (Keycode.SHIFT, Keycode.G), (Keycode.SHIFT, Keycode.H)],
+        ['prevPage', (Keycode.SHIFT, Keycode.J), (Keycode.SHIFT, Keycode.K), 'nextPage'],
+    ],
+]
 
-group.append(image_sprite)
-board.DISPLAY.show(group)
+# Functions
+def setPage(index):
+    global currentPage
 
-# Set buttons
-btn1 = Keycode.A
-btn2 = Keycode.B
-btn3 = Keycode.C
-btn4 = Keycode.D
-btn5 = Keycode.E
-btn6 = Keycode.F
-btn7 = Keycode.G
-btn8 = Keycode.H
-btn9 = Keycode.I
-btn10 = Keycode.J
-btn11 = Keycode.K
-btn12 = Keycode.L
+    if index >= len(IMG_PATH_PAGES):
+        return
 
-# must wait at least this long between touch events
-TOUCH_COOLDOWN = 0.5  # seconds
+    currentPage = index
 
-#time.sleep(1)
+    if btnGroup:
+        btnGroup.pop()
+
+    # Load current page button bitmap
+    image = displayio.OnDiskBitmap(
+        open(IMG_PATH_PAGES[currentPage], "rb")
+    )
+
+    btnGroup.append(
+        displayio.TileGrid(
+            image,
+            pixel_shader = getattr(
+                image,
+                'pixel_shader',
+                displayio.ColorConverter()
+            )
+        )
+    )
+
+    board.DISPLAY.show(btnGroup)
+
+def prevPage():
+    if currentPage > 0:
+        setPage(currentPage - 1)
+    else:
+        setPage(len(IMG_PATH_PAGES) - 1)
+
+def nextPage():
+    if currentPage < len(IMG_PATH_PAGES) - 1:
+        setPage(currentPage + 1)
+    else:
+        setPage(0)
+
+# Configure initial values
+previousTouch = None
+previousTouchTime = 0
+currentPage = 0
+
+# Initialise keyboards
 keyboard = Keyboard(usb_hid.devices)
 keyboard_layout = KeyboardLayoutUS(keyboard)
 
-# previous iteration touch events
-_previous_touch = None
+# Initialise touchscreen
+touchScreen = adafruit_touchscreen.Touchscreen(
+    board.TOUCH_XL,
+    board.TOUCH_XR,
+    board.TOUCH_YD,
+    board.TOUCH_YU,
+    calibration = (
+        (5200, 59000),
+        (5800, 57000)
+    ),
+    size = (
+        board.DISPLAY.width,
+        board.DISPLAY.height
+    )
+)
 
-# last time a touch occured
-_previous_touch_time = 0
+# Show splash image on startup
+pyportal = PyPortal(
+    default_bg = IMG_PATH_SPLASH
+)
+
+# Initialise button image group
+btnGroup = displayio.Group()
+
+setPage(currentPage)
 
 # main loop
 while True:
-    # check for touch events
-    p = ts.touch_point
-    _now = time.monotonic()
-    # if touch cooldown time has elapsed
-    if _now >= _previous_touch_time + TOUCH_COOLDOWN:
-        # if there is a touch
-        if p and not _previous_touch:
-            # store the time to compare with next iteration
-            _previous_touch_time = _now
-            # if touch is on top row
-            if p[1] < 80:
-                # Button 1
-                if p[0] <80:
-                    keyboard.press(btn1)
-                    keyboard.release(btn1)
-                # Button 2
-                elif p[0] >80 and p[0] <160:
-                    keyboard.press(btn2)
-                    keyboard.release(btn2)
-                # Button 3
-                elif p[0] >160 and p[0] <240:
-                    keyboard.press(btn3)
-                    keyboard.release(btn3)
-                # Button 4
-                else:
-                    keyboard.press(btn4)
-                    keyboard.release(btn4)
-	    #if touch is on middle row
-	    elif p[1] > 80 and p[1] <160:
-		# Button 5
-                if p[0] <80:
-                    keyboard.press(btn5)
-                    keyboard.release(btn5)
-                # Button 6
-                elif p[0] >80 and p[0] <160:
-                    keyboard.press(btn6)
-                    keyboard.release(btn6)
-                # Button 7
-                elif p[0] >160 and p[0] <240:
-                    keyboard.press(btn7)
-                    keyboard.release(btn7)
-                # Button 8
-                else:
-                    keyboard.press(btn8)
-                    keyboard.release(btn8)
-            # if touch is on Bottom row
-	    else:
-		# Button 9
-                if p[0] <80:
-                    keyboard.press(btn9)
-                    keyboard.release(btn9)
-                # Button 10
-                elif p[0] >80 and p[0] <160:
-                    keyboard.press(btn10)
-                    keyboard.release(btn10)
-                # Button 11
-                elif p[0] >160 and p[0] <240:
-                    keyboard.press(btn11)
-                    keyboard.release(btn11)
-                # Button 12
-                else:
-                    keyboard.press(btn12)
-                    keyboard.release(btn12)
+    currentTime = time.monotonic()
 
-    # store previous touch event t compare with next iteration
-    _previous_touch = p
+    # skip if still in touch cooldown
+    if currentTime < (previousTouchTime + TOUCH_COOLDOWN):
+        continue
+
+    currentTouch = touchScreen.touch_point
+
+    # skip if not being touched or current touch matches the last touch
+    if currentTouch is None or currentTouch == previousTouch:
+        continue
+
+    # work out which row/col has been pressed
+    touchX = math.floor(currentTouch[0] / (board.DISPLAY.width / BTN_COLS))
+    touchY = math.floor(currentTouch[1] / (board.DISPLAY.height / BTN_ROWS))
+
+    currentKeyCodes = BTN_PAGE_MAP[currentPage][touchY][touchX]
+
+    # send press/release for key(s) defined in row/col
+    if currentKeyCodes == 'prevPage':
+        prevPage()
+    elif currentKeyCodes == 'nextPage':
+        nextPage()
+    elif type(currentKeyCodes) in [list, tuple]:
+        keyboard.send(*currentKeyCodes)
+    else:
+        keyboard.send(currentKeyCodes)
+
+    # store the time/touch event to compare against next iteration
+    previousTouchTime = currentTime
+    previousTouch = currentTouch
