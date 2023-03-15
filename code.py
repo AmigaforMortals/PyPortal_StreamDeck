@@ -121,16 +121,16 @@ setPage(currentPage)
 
 # main loop
 while True:
-    # check for touch events
     currentTime = time.monotonic()
-    currentTouch = touchScreen.touch_point
 
     # skip if still in touch cooldown
     if currentTime < (previousTouchTime + TOUCH_COOLDOWN):
         continue
 
-    # skip if current touch matches last touch
-    if currentTouch == previousTouch:
+    currentTouch = touchScreen.touch_point
+
+    # skip if not being touched or current touch matches the last touch
+    if currentTouch is None or currentTouch == previousTouch:
         continue
 
     # work out which row/col has been pressed
