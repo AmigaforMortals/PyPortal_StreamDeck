@@ -10,18 +10,19 @@ from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
 from adafruit_hid.keycode import Keycode
 from adafruit_pyportal import PyPortal
+from secrets import secrets
 
 # Configuration
 BTN_COLS = 4
 BTN_ROWS = 3
-TOUCH_COOLDOWN = 0.2  # minimum amount of seconds to wait between touch events
+THEME = secrets['streamDeckTheme'] or 'AmigaForMortals'
 
-IMG_PATH_SPLASH = '/images/Splash.bmp'
+IMG_PATH_SPLASH = '/config/' + THEME + '/img/Splash.bmp'
 
 IMG_PATH_PAGES = [
-    '/images/Page1.bmp',
-    '/images/Page2.bmp',
-    '/images/Page3.bmp',
+    '/config/' + THEME + '/img/Page1.bmp',
+    '/config/' + THEME + '/img/Page2.bmp',
+    '/config/' + THEME + '/img/Page3.bmp',
 ]
 
 BTN_PAGE_MAP = [
@@ -85,9 +86,9 @@ def nextPage():
         setPage(0)
 
 # Configure initial values
-previousTouch = None
-previousTouchTime = 0
 currentPage = 0
+currentTouchX = None
+currentTouchY = None
 
 # Initialise keyboards
 keyboard = Keyboard(usb_hid.devices)
@@ -121,34 +122,31 @@ setPage(currentPage)
 
 # main loop
 while True:
-    currentTime = time.monotonic()
-
-    # skip if still in touch cooldown
-    if currentTime < (previousTouchTime + TOUCH_COOLDOWN):
-        continue
-
     currentTouch = touchScreen.touch_point
 
-    # skip if not being touched or current touch matches the last touch
-    if currentTouch is None or currentTouch == previousTouch:
+    # reset current X/Y values if screen is not being touched
+    if currentTouch is None:
+        currentTouchX = None
+        currentTouchY = None
         continue
 
-    # work out which row/col has been pressed
-    touchX = math.floor(currentTouch[0] / (board.DISPLAY.width / BTN_COLS))
-    touchY = math.floor(currentTouch[1] / (board.DISPLAY.height / BTN_ROWS))
+    # skip if we've already handled the current touch
+    if type(currentTouchX) is int and type(currentTouchY) is int:
+        continue
 
-    currentKeyCodes = BTN_PAGE_MAP[currentPage][touchY][touchX]
+    # work out which button row/col is being pressed
+    currentTouchX = math.floor(currentTouch[0] / (board.DISPLAY.width / BTN_COLS))
+    currentTouchY = math.floor(currentTouch[1] / (board.DISPLAY.height / BTN_ROWS))
 
-    # send press/release for key(s) defined in row/col
-    if currentKeyCodes == 'prevPage':
+    # look up the button action based on the X/Y values
+    currentButtonAction = BTN_PAGE_MAP[currentPage][currentTouchY][currentTouchX]
+
+    # Trigger a function or send press/release for key(s) defined for current button action
+    if currentButtonAction == 'prevPage':
         prevPage()
-    elif currentKeyCodes == 'nextPage':
+    elif currentButtonAction == 'nextPage':
         nextPage()
-    elif type(currentKeyCodes) in [list, tuple]:
-        keyboard.send(*currentKeyCodes)
+    elif type(currentButtonAction) in [list, tuple]:
+        keyboard.send(*currentButtonAction)
     else:
-        keyboard.send(currentKeyCodes)
-
-    # store the time/touch event to compare against next iteration
-    previousTouchTime = currentTime
-    previousTouch = currentTouch
+        keyboard.send(currentButtonAction)

@@ -4,9 +4,10 @@
 # keep it a secret.
 
 secrets = {
-    'ssid' : 'YOUR SSID HERE',             # Keep the two '' quotes around the name
-    'password' : 'YOUR PASSWORD HERE',         # Keep the two '' quotes around password
-    'timezone' : "Europe/London",  # http://worldtimeapi.org/timezones
-    'aio_username' : 'YOUR_ADAFRUIT_ACCOUNT_USERNAME',
-    'aio_key' : 'YOUR_ADAFRUITIO_KEY',
-    }
+    'ssid': 'YOUR SSID HERE',                            # Keep the two '' quotes around the name
+    'password': 'YOUR PASSWORD HERE',                    # Keep the two '' quotes around password
+    'timezone': "Europe/London",                         # http://worldtimeapi.org/timezones
+    'aio_username': 'YOUR_ADAFRUIT_ACCOUNT_USERNAME',
+    'aio_key': 'YOUR_ADAFRUITIO_KEY',
+    'streamDeckTheme': 'AmigaForMortals',
+}
