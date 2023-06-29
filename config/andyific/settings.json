@@ -1,0 +1,201 @@
+{
+	"transition": "fade",
+
+	"pages": [
+		[
+			[
+				{
+					"tileIndex": 1,
+					"keyCodes": [
+						"CONTROL",
+						"KEYPAD_ONE"
+					]
+				},
+				{
+					"tileIndex": 2,
+					"keyCodes": [
+						"CONTROL",
+						"KEYPAD_TWO"
+					]
+				},
+				{
+					"tileIndex": 3,
+					"keyCodes": [
+						"CONTROL",
+						"KEYPAD_THREE"
+					]
+				},
+				{
+					"tileIndex": 4,
+					"keyCodes": [
+						"CONTROL",
+						"KEYPAD_FOUR"
+					]
+				}
+			],
+
+			[
+				{
+					"tileIndex": 20,
+					"keyCodes": [
+						"CONTROL",
+						"KEYPAD_FIVE"
+					]
+				},
+				{
+					"tileIndex": 0,
+					"keyCodes": [
+						"CONTROL",
+						"KEYPAD_SIX"
+					]
+				},
+				{
+					"tileIndex": 14,
+					"keyCodes": [
+						"CONTROL",
+						"KEYPAD_SEVEN"
+					]
+				},
+				{
+					"tileIndex": 8,
+					"keyCodes": [
+						"CONTROL",
+						"KEYPAD_EIGHT"
+					],
+					"repeatAfter": 1
+				}
+			],
+
+			[
+				{
+					"tileIndex": 5,
+					"keyCodes": [
+						"CONTROL",
+						"KEYPAD_NINE"
+					]
+				},
+				{
+					"tileIndex": 6,
+					"keyCodes": [
+						"CONTROL",
+						"KEYPAD_ZERO"
+					]
+				},
+				{
+					"tileIndex": 7,
+					"keyCodes": [
+						"CONTROL",
+						"KEYPAD_PERIOD"
+					]
+				},
+				{
+					"tileIndex": 12,
+					"page": "next"
+				}
+			]
+		],
+
+		[
+			[
+				{
+					"tileIndex": 13,
+					"keyCodes": [
+						"CONTROL",
+						"COMMAND",
+						"KEYPAD_ONE"
+					]
+				},
+				{
+					"tileIndex": 19,
+					"keyCodes": [
+						"CONTROL",
+						"COMMAND",
+						"KEYPAD_TWO"
+					]
+				},
+				{
+					"tileIndex": 15,
+					"keyCodes": [
+						"CONTROL",
+						"COMMAND",
+						"KEYPAD_THREE"
+					]
+				},
+				{
+					"tileIndex": 16,
+					"keyCodes": [
+						"CONTROL",
+						"COMMAND",
+						"KEYPAD_FOUR"
+					]
+				}
+			],
+
+			[
+				{
+					"tileIndex": 9,
+					"keyCodes": [
+						"CONTROL",
+						"COMMAND",
+						"KEYPAD_FIVE"
+					]
+				},
+				{
+					"tileIndex": 10,
+					"keyCodes": [
+						"CONTROL",
+						"COMMAND",
+						"KEYPAD_SIX"
+					]
+				},
+				{
+					"tileIndex": 0,
+					"keyCodes": [
+						"CONTROL",
+						"COMMAND",
+						"KEYPAD_SEVEN"
+					]
+				},
+				{
+					"tileIndex": 17,
+					"keyCodes": [
+						"CONTROL",
+						"COMMAND",
+						"KEYPAD_EIGHT"
+					]
+				}
+			],
+
+			[
+				{
+					"tileIndex": 11,
+					"keyCodes": [
+						"CONTROL",
+						"COMMAND",
+						"KEYPAD_NINE"
+					]
+				},
+				{
+					"tileIndex": 11,
+					"keyCodes": [
+						"CONTROL",
+						"COMMAND",
+						"KEYPAD_ZERO"
+					]
+				},
+				{
+					"tileIndex": 18,
+					"keyCodes": [
+						"CONTROL",
+						"COMMAND",
+						"KEYPAD_PERIOD"
+					]
+				},
+				{
+					"tileIndex": 12,
+					"page": "previous"
+				}
+			]
+		]
+	]
+}

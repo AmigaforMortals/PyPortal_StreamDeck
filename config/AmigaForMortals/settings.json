@@ -1,0 +1,142 @@
+{
+	"splash": "Splash.bmp",
+
+	"pages": [
+		[
+			[
+				{
+					"tileIndex": 1,
+					"keyCodes": "A"
+				},
+
+				{
+					"tileIndex": 2,
+					"keyCodes": "B"
+				},
+
+				{
+					"tileIndex": 3,
+					"keyCodes": "C"
+				},
+
+				{
+					"tileIndex": 4,
+					"keyCodes": "D"
+				},
+			],
+
+			[
+				{
+					"tileIndex": 5,
+					"keyCodes": "E"
+				},
+
+				{
+					"tileIndex": 6,
+					"keyCodes": "F"
+				},
+
+				{
+					"tileIndex": 7,
+					"keyCodes": "G"
+				},
+
+				{
+					"tileIndex": 8,
+					"keyCodes": "H"
+				},
+			],
+
+			[
+				{
+					"tileIndex": 0,
+					"page": "next"
+				},
+
+				{
+					"tileIndex": 9,
+					"keyCodes": "J"
+				},
+
+				{
+					"tileIndex": 10,
+					"keyCodes": "K"
+				},
+
+				{
+					"tileIndex": 11,
+					"keyCodes": "L"
+				},
+			],
+		],
+
+		[
+			[
+				{
+					"tileIndex": 12,
+					"keyCodes": "M"
+				},
+
+				{
+					"tileIndex": 13,
+					"keyCodes": "N"
+				},
+
+				{
+					"tileIndex": 14,
+					"keyCodes": "O"
+				},
+
+				{
+					"tileIndex": 15,
+					"keyCodes": "P"
+				},
+			],
+
+			[
+				{
+					"tileIndex": 16,
+					"keyCodes": "Q"
+				},
+
+				{
+					"tileIndex": 17,
+					"keyCodes": "R"
+				},
+
+				{
+					"tileIndex": 18,
+					"keyCodes": "S"
+				},
+
+				{
+					"tileIndex": 19,
+					"keyCodes": "T"
+				},
+			],
+
+			[
+				{
+					"tileIndex": 0,
+					"page": "previous"
+				},
+
+				{
+					"tileIndex": 20,
+					"keyCodes": "V"
+				},
+
+				{
+					"tileIndex": 21,
+					"keyCodes": "W"
+				},
+
+				{
+					"tileIndex": 22,
+					"keyCodes": "X"
+				},
+
+			],
+		]
+	]
+}

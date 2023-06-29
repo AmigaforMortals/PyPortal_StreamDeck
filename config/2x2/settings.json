@@ -1,0 +1,56 @@
+{
+	"pages": [
+		[
+			[
+				{
+					"tileIndex": 0,
+					"keyCodes": ["CONTROL", "KEYPAD_ONE"]
+				},
+
+				{
+					"tileIndex": 1,
+					"keyCodes": ["CONTROL", "KEYPAD_TWO"]
+				}
+			],
+
+			[
+				{
+					"tileIndex": 1,
+					"page": "previous"
+				},
+
+				{
+					"tileIndex": 0,
+					"page": "next"
+				}
+			]
+		],
+
+		[
+			[
+				{
+					"tileIndex": 1,
+					"keyCodes": ["CONTROL", "KEYPAD_THREE"]
+				},
+
+				{
+					"tileIndex": 0,
+					"keyCodes": ["CONTROL", "KEYPAD_FOUR"]
+				}
+			],
+
+			[
+
+				{
+					"tileIndex": 0,
+					"page": "previous"
+				},
+
+				{
+					"tileIndex": 1,
+					"page": "next"
+				}
+			]
+		]
+	]
+}
