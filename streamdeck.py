@@ -89,7 +89,8 @@ def fadeOut(step = 0.1, speed = 0.05):
 def setTile(touch, state = 0):
 	if type(touch['x']) is int and type(touch['y']) is int:
 		i = (touch['y'] * getPageColumns()) + touch['x']
-		btnGrid[i] = themeConfig['pages'][currentPage][touch['y']][touch['x']]["tileIndex"] + (btnVariations * state)
+		btn = themeConfig['pages'][currentPage][touch['y']][touch['x']]["button"]
+		btnGrid[i] = themeConfig['buttons'][btn][state]
 
 def setPage(index):
 	global currentTouch

@@ -1,32 +1,56 @@
 {
 	"transition": "fade",
 
+	"buttons": {
+		"abort": [20, 41],
+		"bitsCheered": [7, 28],
+		"blank": [0, 21],
+		"brb": [3, 24],
+		"eight": [8, 29],
+		"end": [4, 25],
+		"fridgeNoise": [19, 40],
+		"goodJob": [14, 35],
+		"hd60x": [16, 37],
+		"intro": [1, 22],
+		"main": [2, 23],
+		"newFollower": [5, 26],
+		"newSubscriber": [6, 27],
+		"nextPage": [12, 33],
+		"refreshBrowserSource": [18, 39],
+		"scrollStars": [10, 31],
+		"sfx": [13, 34],
+		"toggleCameraAndMic": [17, 38],
+		"toggleShiftForRiscOS": [15, 36],
+		"toggleStars": [9, 30],
+		"toggleText": [11, 32]
+	},
+
 	"pages": [
 		[
 			[
 				{
-					"tileIndex": 1,
+					"button": "intro",
 					"keyCodes": [
 						"CONTROL",
 						"KEYPAD_ONE"
 					]
 				},
 				{
-					"tileIndex": 2,
+					"button": "main",
 					"keyCodes": [
 						"CONTROL",
 						"KEYPAD_TWO"
 					]
 				},
 				{
-					"tileIndex": 3,
+					"button": "brb",
 					"keyCodes": [
 						"CONTROL",
 						"KEYPAD_THREE"
 					]
 				},
 				{
-					"tileIndex": 4,
+					"button": "end",
 					"keyCodes": [
 						"CONTROL",
 						"KEYPAD_FOUR"
@@ -36,28 +60,28 @@
 
 			[
 				{
-					"tileIndex": 20,
+					"button": "abort",
 					"keyCodes": [
 						"CONTROL",
 						"KEYPAD_FIVE"
 					]
 				},
 				{
-					"tileIndex": 0,
+					"button": "blank",
 					"keyCodes": [
 						"CONTROL",
 						"KEYPAD_SIX"
 					]
 				},
 				{
-					"tileIndex": 14,
+					"button": "goodJob",
 					"keyCodes": [
 						"CONTROL",
 						"KEYPAD_SEVEN"
 					]
 				},
 				{
-					"tileIndex": 8,
+					"button": "eight",
 					"keyCodes": [
 						"CONTROL",
 						"KEYPAD_EIGHT"
@@ -68,28 +92,28 @@
 
 			[
 				{
-					"tileIndex": 5,
+					"button": "newFollower",
 					"keyCodes": [
 						"CONTROL",
 						"KEYPAD_NINE"
 					]
 				},
 				{
-					"tileIndex": 6,
+					"button": "newSubscriber",
 					"keyCodes": [
 						"CONTROL",
 						"KEYPAD_ZERO"
 					]
 				},
 				{
-					"tileIndex": 7,
+					"button": "bitsCheered",
 					"keyCodes": [
 						"CONTROL",
 						"KEYPAD_PERIOD"
 					]
 				},
 				{
-					"tileIndex": 12,
+					"button": "nextPage",
 					"page": "next"
 				}
 			]
@@ -98,7 +122,7 @@
 		[
 			[
 				{
-					"tileIndex": 13,
+					"button": "sfx",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -106,7 +130,7 @@
 					]
 				},
 				{
-					"tileIndex": 19,
+					"button": "fridgeNoise",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -114,7 +138,7 @@
 					]
 				},
 				{
-					"tileIndex": 15,
+					"button": "toggleShiftForRiscOS",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -122,7 +146,7 @@
 					]
 				},
 				{
-					"tileIndex": 16,
+					"button": "toggleStars",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -133,7 +157,7 @@
 
 			[
 				{
-					"tileIndex": 9,
+					"button": "scrollStars",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -141,7 +165,7 @@
 					]
 				},
 				{
-					"tileIndex": 10,
+					"button": "blank",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -149,7 +173,7 @@
 					]
 				},
 				{
-					"tileIndex": 0,
+					"button": "toggleCameraAndMic",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -157,7 +181,7 @@
 					]
 				},
 				{
-					"tileIndex": 17,
+					"button": "toggleText",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -168,7 +192,7 @@
 
 			[
 				{
-					"tileIndex": 11,
+					"button": "toggleText",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -176,7 +200,7 @@
 					]
 				},
 				{
-					"tileIndex": 11,
+					"button": "toggleText",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -184,7 +208,7 @@
 					]
 				},
 				{
-					"tileIndex": 18,
+					"button": "refreshBrowserSource",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -192,7 +216,7 @@
 					]
 				},
 				{
-					"tileIndex": 12,
+					"button": "nextPage",
 					"page": "previous"
 				}
 			]

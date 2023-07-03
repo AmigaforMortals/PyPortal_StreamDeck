@@ -1,24 +1,33 @@
 {
+	"buttons": {
+		"lightRed": [0, 6],
+		"darkRed": [1, 7],
+		"lightBlue": [2, 8],
+		"darkBlue": [3, 9],
+		"lightGreen": [4, 10],
+		"darkGreen": [5, 11]
+	},
+
 	"pages": [
 		[
 			[
 				{
-					"tileIndex": 0,
+					"button": "lightRed",
 					"keyCodes": ["CONTROL", "KEYPAD_ONE"]
 				},
 
 				{
-					"tileIndex": 1,
+					"button": "darkRed",
 					"keyCodes": ["CONTROL", "KEYPAD_TWO"]
 				},
 
 				{
-					"tileIndex": 0,
+					"button": "lightRed",
 					"keyCodes": ["CONTROL", "KEYPAD_THREE"]
 				},
 
 				{
-					"tileIndex": 1,
+					"button": "darkRed",
 					"keyCodes": ["CONTROL", "KEYPAD_FOUR"]
 				},
 
@@ -26,44 +35,44 @@
 
 			[
 				{
-					"tileIndex": 1,
+					"button": "darkRed",
 					"keyCodes": ["CONTROL", "KEYPAD_FIVE"]
 				},
 
 				{
-					"tileIndex": 0,
+					"button": "lightRed",
 					"keyCodes": ["CONTROL", "KEYPAD_SIX"]
 				},
 
 				{
-					"tileIndex": 1,
+					"button": "darkRed",
 					"keyCodes": ["CONTROL", "KEYPAD_SEVEN"]
 				},
 
 				{
-					"tileIndex": 0,
+					"button": "lightRed",
 					"keyCodes": ["CONTROL", "KEYPAD_EIGHT"]
 				},
 
 			],
 			[
 				{
-					"tileIndex": 0,
+					"button": "lightRed",
 					"page": "previous"
 				},
 
 				{
-					"tileIndex": 1,
+					"button": "darkRed",
 					"keyCodes": ["CONTROL", "KEYPAD_NINE"]
 				},
 
 				{
-					"tileIndex": 0,
+					"button": "lightRed",
 					"keyCodes": ["CONTROL", "KEYPAD_ZERO"]
 				},
 
 				{
-					"tileIndex": 1,
+					"button": "darkRed",
 					"page": "next"
 				},
 			],
@@ -72,22 +81,22 @@
 		[
 			[
 				{
-					"tileIndex": 2,
+					"button": "lightBlue",
 					"keyCodes": ["CONTROL", "OPTION", "KEYPAD_ONE"]
 				},
 
 				{
-					"tileIndex": 3,
+					"button": "darkBlue",
 					"keyCodes": ["CONTROL", "OPTION", "KEYPAD_TWO"]
 				},
 
 				{
-					"tileIndex": 2,
+					"button": "lightBlue",
 					"keyCodes": ["CONTROL", "OPTION", "KEYPAD_THREE"]
 				},
 
 				{
-					"tileIndex": 3,
+					"button": "darkBlue",
 					"keyCodes": ["CONTROL", "OPTION", "KEYPAD_FOUR"]
 				},
 
@@ -95,44 +104,44 @@
 
 			[
 				{
-					"tileIndex": 3,
+					"button": "darkBlue",
 					"keyCodes": ["CONTROL", "OPTION", "KEYPAD_FIVE"]
 				},
 
 				{
-					"tileIndex": 2,
+					"button": "lightBlue",
 					"keyCodes": ["CONTROL", "OPTION", "KEYPAD_SIX"]
 				},
 
 				{
-					"tileIndex": 3,
+					"button": "darkBlue",
 					"keyCodes": ["CONTROL", "OPTION", "KEYPAD_SEVEN"]
 				},
 
 				{
-					"tileIndex": 2,
+					"button": "lightBlue",
 					"keyCodes": ["CONTROL", "OPTION", "KEYPAD_EIGHT"]
 				},
 
 			],
 			[
 				{
-					"tileIndex": 2,
+					"button": "lightBlue",
 					"page": "previous"
 				},
 
 				{
-					"tileIndex": 3,
+					"button": "darkBlue",
 					"keyCodes": ["CONTROL", "OPTION", "KEYPAD_NINE"]
 				},
 
 				{
-					"tileIndex": 2,
+					"button": "lightBlue",
 					"keyCodes": ["CONTROL", "OPTION", "KEYPAD_ZERO"]
 				},
 
 				{
-					"tileIndex": 3,
+					"button": "darkBlue",
 					"page": "next"
 				},
 
@@ -142,22 +151,22 @@
 		[
 			[
 				{
-					"tileIndex": 4,
+					"button": "lightGreen",
 					"keyCodes": ["CONTROL", "OPTION", "COMMAND", "KEYPAD_ONE"]
 				},
 
 				{
-					"tileIndex": 5,
+					"button": "darkGreen",
 					"keyCodes": ["CONTROL", "OPTION", "COMMAND", "KEYPAD_TWO"]
 				},
 
 				{
-					"tileIndex": 4,
+					"button": "lightGreen",
 					"keyCodes": ["CONTROL", "OPTION", "COMMAND", "KEYPAD_THREE"]
 				},
 
 				{
-					"tileIndex": 5,
+					"button": "darkGreen",
 					"keyCodes": ["CONTROL", "OPTION", "COMMAND", "KEYPAD_FOUR"]
 				},
 
@@ -165,44 +174,44 @@
 
 			[
 				{
-					"tileIndex": 5,
+					"button": "darkGreen",
 					"keyCodes": ["CONTROL", "OPTION", "COMMAND", "KEYPAD_FIVE"]
 				},
 
 				{
-					"tileIndex": 4,
+					"button": "lightGreen",
 					"keyCodes": ["CONTROL", "OPTION", "COMMAND", "KEYPAD_SIX"]
 				},
 
 				{
-					"tileIndex": 5,
+					"button": "darkGreen",
 					"keyCodes": ["CONTROL", "OPTION", "COMMAND", "KEYPAD_SEVEN"]
 				},
 
 				{
-					"tileIndex": 4,
+					"button": "lightGreen",
 					"keyCodes": ["CONTROL", "OPTION", "COMMAND", "KEYPAD_EIGHT"]
 				},
 
 			],
 			[
 				{
-					"tileIndex": 4,
+					"button": "lightGreen",
 					"page": "previous"
 				},
 
 				{
-					"tileIndex": 5,
+					"button": "darkGreen",
 					"keyCodes": ["CONTROL", "OPTION", "COMMAND", "KEYPAD_NINE"]
 				},
 
 				{
-					"tileIndex": 4,
+					"button": "lightGreen",
 					"keyCodes": ["CONTROL", "OPTION", "COMMAND", "KEYPAD_ZERO"]
 				},
 
 				{
-					"tileIndex": 5,
+					"button": "darkGreen",
 					"page": "next"
 				},
 

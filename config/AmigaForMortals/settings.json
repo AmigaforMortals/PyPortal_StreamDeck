@@ -1,70 +1,96 @@
 {
 	"splash": "Splash.bmp",
 
+	"buttons": {
+		"turnPage": [0, 23],
+		"amiga": [1, 24],
+		"cam": [2, 25],
+		"ads": [3, 26],
+		"end": [4, 27],
+		"discord": [5, 28],
+		"gameOn": [6, 29],
+		"startStop": [7, 30],
+		"mic": [8, 31],
+		"cheer": [9, 32],
+		"welcomeTheFuckIn": [10, 33],
+		"dead": [11, 34],
+		"intro": [12, 35],
+		"gear": [13, 36],
+		"room": [14, 37],
+		"brb": [15, 38],
+		"chewy": [16, 39],
+		"letsGo": [17, 40],
+		"fatality": [18, 41],
+		"amigaPuke": [19, 42],
+		"phrasing": [20, 43],
+		"onlyAmiga": [21, 44],
+		"resetDeaths": [22, 45]
+	},
+
 	"pages": [
 		[
 			[
 				{
-					"tileIndex": 1,
+					"button": "amiga",
 					"keyCodes": "A"
 				},
 
 				{
-					"tileIndex": 2,
+					"button": "cam",
 					"keyCodes": "B"
 				},
 
 				{
-					"tileIndex": 3,
+					"button": "ads",
 					"keyCodes": "C"
 				},
 
 				{
-					"tileIndex": 4,
+					"button": "end",
 					"keyCodes": "D"
 				},
 			],
 
 			[
 				{
-					"tileIndex": 5,
+					"button": "discord",
 					"keyCodes": "E"
 				},
 
 				{
-					"tileIndex": 6,
+					"button": "gameOn",
 					"keyCodes": "F"
 				},
 
 				{
-					"tileIndex": 7,
+					"button": "startStop",
 					"keyCodes": "G"
 				},
 
 				{
-					"tileIndex": 8,
+					"button": "mic",
 					"keyCodes": "H"
 				},
 			],
 
 			[
 				{
-					"tileIndex": 0,
+					"button": "turnPage",
 					"page": "next"
 				},
 
 				{
-					"tileIndex": 9,
+					"button": "cheer",
 					"keyCodes": "J"
 				},
 
 				{
-					"tileIndex": 10,
+					"button": "welcomeTheFuckIn",
 					"keyCodes": "K"
 				},
 
 				{
-					"tileIndex": 11,
+					"button": "dead",
 					"keyCodes": "L"
 				},
 			],
@@ -73,66 +99,66 @@
 		[
 			[
 				{
-					"tileIndex": 12,
+					"button": "intro",
 					"keyCodes": "M"
 				},
 
 				{
-					"tileIndex": 13,
+					"button": "gear",
 					"keyCodes": "N"
 				},
 
 				{
-					"tileIndex": 14,
+					"button": "room",
 					"keyCodes": "O"
 				},
 
 				{
-					"tileIndex": 15,
+					"button": "brb",
 					"keyCodes": "P"
 				},
 			],
 
 			[
 				{
-					"tileIndex": 16,
+					"button": "chewy",
 					"keyCodes": "Q"
 				},
 
 				{
-					"tileIndex": 17,
+					"button": "letsGo",
 					"keyCodes": "R"
 				},
 
 				{
-					"tileIndex": 18,
+					"button": "fatality",
 					"keyCodes": "S"
 				},
 
 				{
-					"tileIndex": 19,
+					"button": "amigaPuke",
 					"keyCodes": "T"
 				},
 			],
 
 			[
 				{
-					"tileIndex": 0,
+					"button": "turnPage",
 					"page": "previous"
 				},
 
 				{
-					"tileIndex": 20,
+					"button": "phrasing",
 					"keyCodes": "V"
 				},
 
 				{
-					"tileIndex": 21,
+					"button": "onlyAmiga",
 					"keyCodes": "W"
 				},
 
 				{
-					"tileIndex": 22,
+					"button": "resetDeaths",
 					"keyCodes": "X"
 				},
 
