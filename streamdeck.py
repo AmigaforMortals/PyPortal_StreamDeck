@@ -12,16 +12,16 @@ from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
 from adafruit_hid.keycode import Keycode
 from secrets import secrets
 
-DEBUG = secrets.get('streamDeckDebug', 0)
+debugging = secrets.get('streamDeckDebug', 0)
 
 # Theme Configuration
-THEME = secrets.get('streamDeckTheme', 'Default')
+theme = secrets.get('streamDeckTheme', 'Default')
 
-with open('/config/{}/settings.json'.format(THEME)) as themeJSON:
+with open('/config/{}/settings.json'.format(theme)) as themeJSON:
 	themeConfig = json.load(themeJSON)
 
 # Image Configuration
-IMG_PATH = '/config/{}/img/'.format(THEME)
+imgPath = '/config/{}/img/'.format(theme)
 
 # Functions
 def refreshDisplay():
@@ -100,7 +100,7 @@ def fadeIn(step = 0.1, speed = 0.05):
 	while board.DISPLAY.brightness < 1:
 		setBacklight(board.DISPLAY.brightness + step)
 
-		if DEBUG:
+		if debugging:
 			print('Fade In: ' + str(board.DISPLAY.brightness))
 
 		time.sleep(speed)
@@ -112,7 +112,7 @@ def fadeOut(step = 0.1, speed = 0.05):
 	while board.DISPLAY.brightness > 0:
 		setBacklight(board.DISPLAY.brightness - step)
 
-		if DEBUG:
+		if debugging:
 			print('Fade Out: ' + str(board.DISPLAY.brightness))
 
 		time.sleep(speed)
@@ -135,7 +135,7 @@ def setPage(index, refreshAfterUpdate = 1):
 
 	currentPage = index
 
-	if DEBUG:
+	if debugging:
 		print('Current page: ' + str(currentPage))
 
 	for tileY in range(0, getPageRows()):
@@ -161,8 +161,8 @@ def nextPage():
 		setPage(0)
 
 def displaySplashScreen():
-	if themeConfig.get('splash', None):
-		if DEBUG:
+	if themeConfig.get('images', {}).get('splash', None):
+		if debugging:
 			print('Displaying Splash Screen')
 
 		setBacklight(0)
@@ -171,7 +171,7 @@ def displaySplashScreen():
 		transitionSpeed = themeConfig.get('transitionSpeed', 0.05)
 
 		splash = displayio.OnDiskBitmap(
-			IMG_PATH + themeConfig['splash']
+			imgPath + themeConfig.get('images', {}).get('splash', 'Splash.bmp')
 		)
 
 		splashGroup = displayio.Group()
@@ -240,7 +240,7 @@ previousButton = None
 timeTouched = None
 
 btns = displayio.OnDiskBitmap(
-	IMG_PATH + 'Buttons.bmp'
+	imgPath + themeConfig.get('images', {}).get('buttons', 'Buttons.bmp')
 )
 
 btnVariations = math.floor(btns.width / (board.DISPLAY.width / getPageColumns()));
@@ -334,7 +334,7 @@ while True:
 			else:
 				timeTouched = currentTime
 
-		if DEBUG:
+		if debugging:
 			print(currentButton)
 
 		# set the tile for the button currently being touched

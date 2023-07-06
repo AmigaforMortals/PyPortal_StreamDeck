@@ -1,7 +1,9 @@
 {
-	"transitionType": "fade",
-	"transitionStep": 0.1,
-	"transitionSpeed": 0.05,
+	"autoRefresh": 0,
+
+	"images": {
+		"buttons": "buttons.bmp"
+	},
 
 	"buttons": {
 		"abort": [20, 41],
@@ -148,7 +150,7 @@
 					]
 				},
 				{
-					"button": "toggleStars",
+					"button": "hd60x",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -159,7 +161,7 @@
 
 			[
 				{
-					"button": "scrollStars",
+					"button": "toggleStars",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -167,7 +169,7 @@
 					]
 				},
 				{
-					"button": "blank",
+					"button": "scrollStars",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -175,7 +177,7 @@
 					]
 				},
 				{
-					"button": "toggleCameraAndMic",
+					"button": "blank",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",
@@ -183,7 +185,7 @@
 					]
 				},
 				{
-					"button": "toggleText",
+					"button": "toggleCameraAndMic",
 					"keyCodes": [
 						"CONTROL",
 						"COMMAND",

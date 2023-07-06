@@ -1,5 +1,7 @@
 {
-	"splash": "Splash.bmp",
+	"images": {
+		"splash": "Splash.bmp"
+	},
 
 	"buttons": {
 		"turnPage": [0, 23],
