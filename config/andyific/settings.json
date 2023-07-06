@@ -1,5 +1,7 @@
 {
-	"transition": "fade",
+	"transitionType": "fade",
+	"transitionStep": 0.1,
+	"transitionSpeed": 0.05,
 
 	"buttons": {
 		"abort": [20, 41],

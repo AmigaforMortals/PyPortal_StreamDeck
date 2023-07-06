@@ -10,7 +10,6 @@ from adafruit_button import Button
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
 from adafruit_hid.keycode import Keycode
-from adafruit_pyportal import PyPortal
 from secrets import secrets
 
 DEBUG = secrets.get('streamDeckDebug', 0)
@@ -25,6 +24,12 @@ with open('/config/{}/settings.json'.format(THEME)) as themeJSON:
 IMG_PATH = '/config/{}/img/'.format(THEME)
 
 # Functions
+def refreshDisplay():
+	if board.DISPLAY.auto_refresh:
+		return
+
+	board.DISPLAY.refresh()
+
 def getCurrentTouch():
 	time.sleep(0.05)
 	touch = touchScreen.touch_point
@@ -62,37 +67,66 @@ def setBacklight(value):
 	value = max(0, min(1.0, value))
 	board.DISPLAY.brightness = value
 
-def transitionIn(step = 0.1, speed = 0.05):
-	if themeConfig.get('transition', None) is 'fade':
-		fadeIn(step, speed)
+def transitionIn():
+	if themeConfig.get('transitionType', None) is None:
+		return
 
-def transitionOut(step = 0.1, speed = 0.05):
-	if themeConfig.get('transition', None) is 'fade':
-		fadeOut(step, speed)
+	transitionStep = themeConfig.get('transitionStep', 0.1)
+	transitionSpeed = themeConfig.get('transitionSpeed', 0.05)
+
+	if themeConfig.get('transitionType', None) is 'fade':
+		fadeIn(
+			transitionStep,
+			transitionSpeed
+		)
+
+def transitionOut():
+	if themeConfig.get('transitionType', None) is None:
+		return
+
+	transitionStep = themeConfig.get('transitionStep', 0.1)
+	transitionSpeed = themeConfig.get('transitionSpeed', 0.05)
+
+	if themeConfig.get('transitionType', None) is 'fade':
+		fadeOut(
+			transitionStep,
+			transitionSpeed
+		)
 
 def fadeIn(step = 0.1, speed = 0.05):
-	backlightValue = 0
+	setBacklight(0)
+	time.sleep(speed)
 
-	while backlightValue < 1:
-		setBacklight(backlightValue)
-		backlightValue += step
+	while board.DISPLAY.brightness < 1:
+		setBacklight(board.DISPLAY.brightness + step)
+
+		if DEBUG:
+			print('Fade In: ' + str(board.DISPLAY.brightness))
+
 		time.sleep(speed)
 
 def fadeOut(step = 0.1, speed = 0.05):
-	backlightValue = 1
+	setBacklight(1)
+	time.sleep(speed)
 
-	while backlightValue > 0:
-		setBacklight(backlightValue)
-		backlightValue -= step
+	while board.DISPLAY.brightness > 0:
+		setBacklight(board.DISPLAY.brightness - step)
+
+		if DEBUG:
+			print('Fade Out: ' + str(board.DISPLAY.brightness))
+
 		time.sleep(speed)
 
-def setTile(touch, state = 0):
+def setTile(touch, state = 0, refreshAfterUpdate = 1):
 	if type(touch['x']) is int and type(touch['y']) is int:
 		i = (touch['y'] * getPageColumns()) + touch['x']
 		btn = themeConfig['pages'][currentPage][touch['y']][touch['x']]["button"]
 		btnGrid[i] = themeConfig['buttons'][btn][state]
 
-def setPage(index):
+		if refreshAfterUpdate:
+			refreshDisplay()
+
+def setPage(index, refreshAfterUpdate = 1):
 	global currentTouch
 	global currentPage
 
@@ -106,10 +140,13 @@ def setPage(index):
 
 	for tileY in range(0, getPageRows()):
 		for tileX in range(0, getPageColumns()):
-			setTile({
-				'x': tileX,
-				'y': tileY
-			})
+			setTile(
+				{
+					'x': tileX,
+					'y': tileY
+				},
+				refreshAfterUpdate = refreshAfterUpdate
+			)
 
 def prevPage():
 	if currentPage > 0:
@@ -122,6 +159,61 @@ def nextPage():
 		setPage(currentPage + 1)
 	else:
 		setPage(0)
+
+def displaySplashScreen():
+	if themeConfig.get('splash', None):
+		if DEBUG:
+			print('Displaying Splash Screen')
+
+		setBacklight(0)
+
+		transitionStep = themeConfig.get('transitionStep', 0.1)
+		transitionSpeed = themeConfig.get('transitionSpeed', 0.05)
+
+		splash = displayio.OnDiskBitmap(
+			IMG_PATH + themeConfig['splash']
+		)
+
+		splashGroup = displayio.Group()
+
+		splashGrid = displayio.TileGrid(
+			splash,
+			pixel_shader = splash.pixel_shader
+		)
+
+		splashGroup.append(
+			splashGrid
+		)
+
+		board.DISPLAY.show(
+			splashGroup
+		)
+
+		refreshDisplay()
+
+		fadeIn(
+			transitionStep,
+			transitionSpeed
+		)
+
+		time.sleep(3)
+
+		fadeOut(
+			transitionStep,
+			transitionSpeed
+		)
+
+		splashGroup.remove(
+			splashGrid
+		)
+
+		refreshDisplay()
+
+		if themeConfig.get('transitionType', None) is None:
+			setBacklight(1)
+
+# Turn the auto refreshing of the dispaly on/off
+board.DISPLAY.auto_refresh = bool(themeConfig.get('autoRefresh', True))
 
 # Initialise touchscreen
 touchScreen = adafruit_touchscreen.Touchscreen(
@@ -158,10 +250,9 @@ keyboard = Keyboard(usb_hid.devices)
 keyboard_layout = KeyboardLayoutUS(keyboard)
 
 # Show splash image on startup
-if themeConfig.get('splash', None):
-	pyportal = PyPortal(
-		default_bg = IMG_PATH + themeConfig['splash']
-	)
+displaySplashScreen()
+
+setBacklight(0)
 
 # Initialise button image group
 btnGroup = displayio.Group()
@@ -179,11 +270,16 @@ btnGroup.append(
 	btnGrid
 )
 
-board.DISPLAY.show(btnGroup)
+board.DISPLAY.show(
+	btnGroup
+)
 
 setPage(currentPage)
 
-transitionIn()
+fadeIn(
+	themeConfig.get('transitionStep', 0.1),
+	themeConfig.get('transitionSpeed', 0.05)
+)
 
 # main loop
 while True:
