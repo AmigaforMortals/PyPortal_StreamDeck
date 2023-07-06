@@ -231,7 +231,9 @@ while True:
 
 		# unless specified to repeat after a defined delay, skip triggering the button if we've previously triggered it
 		if currentButton == previousButton:
-			if previousButton.get('repeatAfter', None) is None or currentTime < (timeTouched + previousButton['repeatAfter']):
+			repeatAfter = previousButton.get('repeatAfter', themeConfig.get('repeatAfter', None))
+
+			if repeatAfter is None or currentTime < (timeTouched + repeatAfter):
 				continue
 			else:
 				timeTouched = currentTime
