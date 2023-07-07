@@ -174,19 +174,13 @@ def displaySplashScreen():
 			imgPath + themeConfig.get('images', {}).get('splash', 'Splash.bmp')
 		)
 
-		splashGroup = displayio.Group()
-
 		splashGrid = displayio.TileGrid(
 			splash,
 			pixel_shader = splash.pixel_shader
 		)
 
-		splashGroup.append(
+		displayGroup.append(
 			splashGrid
-		)
-
-		board.DISPLAY.show(
-			splashGroup
 		)
 
 		refreshDisplay()
@@ -203,7 +197,7 @@ def displaySplashScreen():
 			transitionSpeed
 		)
 
-		splashGroup.remove(
+		displayGroup.remove(
 			splashGrid
 		)
 
@@ -249,13 +243,18 @@ btnVariations = math.floor(btns.width / (board.DISPLAY.width / getPageColumns())
 keyboard = Keyboard(usb_hid.devices)
 keyboard_layout = KeyboardLayoutUS(keyboard)
 
+# Initialise display group
+displayGroup = displayio.Group()
+
+board.DISPLAY.show(
+	displayGroup
+)
+
 # Show splash image on startup
 displaySplashScreen()
 
+# Turn backlight off
 setBacklight(0)
-
-# Initialise button image group
-btnGroup = displayio.Group()
 
 btnGrid = displayio.TileGrid(
 	btns,
@@ -266,12 +265,8 @@ btnGrid = displayio.TileGrid(
 	tile_height = getTileHeight()
 )
 
-btnGroup.append(
+displayGroup.append(
 	btnGrid
-)
-
-board.DISPLAY.show(
-	btnGroup
 )
 
 setPage(currentPage)
