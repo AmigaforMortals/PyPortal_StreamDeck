@@ -200,9 +200,6 @@ def displaySplashScreen():
 
 	refreshDisplay()
 
-	if themeConfig.get('transitionType', None) is None:
-		setBacklight(1)
-
 # Turn the auto refreshing of the dispaly on/off
 board.DISPLAY.auto_refresh = bool(themeConfig.get('autoRefresh', True))
 
@@ -251,7 +248,8 @@ board.DISPLAY.show(
 displaySplashScreen()
 
 # Turn backlight off
-setBacklight(0)
+if board.DISPLAY.brightness > 0:
+	setBacklight(0)
 
 btnGrid = displayio.TileGrid(
 	btns,
