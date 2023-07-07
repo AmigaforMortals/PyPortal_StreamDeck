@@ -67,6 +67,9 @@ def setBacklight(value):
 	value = max(0, min(1.0, value))
 	board.DISPLAY.brightness = value
 
+	if debugging:
+		print('Backlight: ' + str(board.DISPLAY.brightness))
+
 def transitionIn():
 	if themeConfig.get('transitionType', None) is None:
 		return
@@ -99,10 +102,6 @@ def fadeIn(step = 0.1, speed = 0.05):
 
 	while board.DISPLAY.brightness < 1:
 		setBacklight(board.DISPLAY.brightness + step)
-
-		if debugging:
-			print('Fade In: ' + str(board.DISPLAY.brightness))
-
 		time.sleep(speed)
 
 def fadeOut(step = 0.1, speed = 0.05):
@@ -111,10 +110,6 @@ def fadeOut(step = 0.1, speed = 0.05):
 
 	while board.DISPLAY.brightness > 0:
 		setBacklight(board.DISPLAY.brightness - step)
-
-		if debugging:
-			print('Fade Out: ' + str(board.DISPLAY.brightness))
-
 		time.sleep(speed)
 
 def setTile(touch, state = 0, refreshAfterUpdate = 1):
