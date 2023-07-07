@@ -161,50 +161,52 @@ def nextPage():
 		setPage(0)
 
 def displaySplashScreen():
-	if themeConfig.get('images', {}).get('splash', None):
-		if debugging:
-			print('Displaying Splash Screen')
+	if themeConfig.get('images', {}).get('splash', None) is None:
+		return
 
-		setBacklight(0)
+	if debugging:
+		print('Displaying Splash Screen')
 
-		transitionStep = themeConfig.get('transitionStep', 0.1)
-		transitionSpeed = themeConfig.get('transitionSpeed', 0.05)
+	setBacklight(0)
 
-		splash = displayio.OnDiskBitmap(
-			imgPath + themeConfig.get('images', {}).get('splash', 'Splash.bmp')
-		)
+	transitionStep = themeConfig.get('transitionStep', 0.1)
+	transitionSpeed = themeConfig.get('transitionSpeed', 0.05)
 
-		splashGrid = displayio.TileGrid(
-			splash,
-			pixel_shader = splash.pixel_shader
-		)
+	splash = displayio.OnDiskBitmap(
+		imgPath + themeConfig.get('images', {}).get('splash', 'Splash.bmp')
+	)
 
-		displayGroup.append(
-			splashGrid
-		)
+	splashGrid = displayio.TileGrid(
+		splash,
+		pixel_shader = splash.pixel_shader
+	)
 
-		refreshDisplay()
+	displayGroup.append(
+		splashGrid
+	)
 
-		fadeIn(
-			transitionStep,
-			transitionSpeed
-		)
+	refreshDisplay()
 
-		time.sleep(3)
+	fadeIn(
+		transitionStep,
+		transitionSpeed
+	)
 
-		fadeOut(
-			transitionStep,
-			transitionSpeed
-		)
+	time.sleep(3)
 
-		displayGroup.remove(
-			splashGrid
-		)
+	fadeOut(
+		transitionStep,
+		transitionSpeed
+	)
 
-		refreshDisplay()
+	displayGroup.remove(
+		splashGrid
+	)
 
-		if themeConfig.get('transitionType', None) is None:
-			setBacklight(1)
+	refreshDisplay()
+
+	if themeConfig.get('transitionType', None) is None:
+		setBacklight(1)
 
 # Turn the auto refreshing of the dispaly on/off
 board.DISPLAY.auto_refresh = bool(themeConfig.get('autoRefresh', True))
