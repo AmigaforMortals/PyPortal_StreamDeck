@@ -66,7 +66,7 @@ def getTileWidth():
 def getTileHeight():
 	return math.floor(board.DISPLAY.height / getPageRows())
 
-def setBacklight(value):
+def setBacklight(value: float):
 	value = max(0, min(1.0, value))
 	board.DISPLAY.brightness = value
 
@@ -77,43 +77,36 @@ def transitionIn():
 	if themeConfig.get('transitionType', None) is None:
 		return
 
-	transitionStep = themeConfig.get('transitionStep', 0.1)
-	transitionSpeed = themeConfig.get('transitionSpeed', 0.05)
-
 	if themeConfig.get('transitionType', None) is 'fade':
-		fadeIn(
-			transitionStep,
-			transitionSpeed
-		)
+		fadeTo(1)
 
 def transitionOut():
 	if themeConfig.get('transitionType', None) is None:
 		return
 
+	if themeConfig.get('transitionType', None) is 'fade':
+		fadeTo(0)
+
+def fadeTo(value, startFrom = None):
 	transitionStep = themeConfig.get('transitionStep', 0.1)
 	transitionSpeed = themeConfig.get('transitionSpeed', 0.05)
 
-	if themeConfig.get('transitionType', None) is 'fade':
-		fadeOut(
-			transitionStep,
-			transitionSpeed
-		)
+	if startFrom is None:
+		startFrom = board.DISPLAY.brightness
 
-def fadeIn(step = 0.1, speed = 0.05):
-	setBacklight(0)
-	time.sleep(speed)
+	if startFrom != board.DISPLAY.brightness:
+		startFrom = float(startFrom)
+		setBacklight(startFrom)
+		time.sleep(transitionSpeed)
 
-	while board.DISPLAY.brightness < 1:
-		setBacklight(board.DISPLAY.brightness + step)
-		time.sleep(speed)
-
-def fadeOut(step = 0.1, speed = 0.05):
-	setBacklight(1)
-	time.sleep(speed)
-
-	while board.DISPLAY.brightness > 0:
-		setBacklight(board.DISPLAY.brightness - step)
-		time.sleep(speed)
+	if value > startFrom:
+		while board.DISPLAY.brightness < value:
+			setBacklight(board.DISPLAY.brightness + transitionStep)
+			time.sleep(transitionSpeed)
+	elif value < startFrom:
+		while board.DISPLAY.brightness > value:
+			setBacklight(board.DISPLAY.brightness - transitionStep)
+			time.sleep(transitionSpeed)
 
 def setTile(touch, state = 0):
 	if type(touch['x']) is int and type(touch['y']) is int:
@@ -167,9 +160,6 @@ def displaySplashScreen():
 
 	setBacklight(0)
 
-	transitionStep = themeConfig.get('transitionStep', 0.1)
-	transitionSpeed = themeConfig.get('transitionSpeed', 0.05)
-
 	splash = displayio.OnDiskBitmap(
 		imgPath + themeConfig.get('splash', {}).get('image', 'Splash.bmp')
 	)
@@ -185,19 +175,13 @@ def displaySplashScreen():
 
 	refreshDisplay()
 
-	fadeIn(
-		transitionStep,
-		transitionSpeed
-	)
+	fadeTo(1)
 
 	time.sleep(
 		themeConfig.get('splash', {}).get('duration', 3)
 	)
 
-	fadeOut(
-		transitionStep,
-		transitionSpeed
-	)
+	fadeTo(0)
 
 	displayGroup.remove(
 		splashGrid
@@ -271,10 +255,7 @@ displayGroup.append(
 
 setPage(currentPage)
 
-fadeIn(
-	themeConfig.get('transitionStep', 0.1),
-	themeConfig.get('transitionSpeed', 0.05)
-)
+fadeTo(1)
 
 # main loop
 while True:
