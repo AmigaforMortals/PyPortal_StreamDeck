@@ -73,18 +73,24 @@ def setBacklight(value: float):
 	if debugging:
 		print('Backlight: ' + str(board.DISPLAY.brightness))
 
-def transitionIn():
-	if themeConfig.get('transitionType', None) is None:
+def transitionIn(transitionType):
+	if transitionType is None:
 		return
 
-	if themeConfig.get('transitionType', None) is 'fade':
+	if transitionType is 'cut':
+		setBacklight(1)
+
+	if transitionType is 'fade':
 		fadeTo(1)
 
-def transitionOut():
-	if themeConfig.get('transitionType', None) is None:
+def transitionOut(transitionType):
+	if transitionType is None:
 		return
 
-	if themeConfig.get('transitionType', None) is 'fade':
+	if transitionType is 'cut':
+		setBacklight(0)
+
+	if transitionType is 'fade':
 		fadeTo(0)
 
 def fadeTo(value, startFrom = None):
@@ -175,13 +181,17 @@ def displaySplashScreen():
 
 	refreshDisplay()
 
-	fadeTo(1)
+	transitionIn(
+		themeConfig.get('splash', {}).get('transition', 'fade')
+	)
 
 	time.sleep(
 		themeConfig.get('splash', {}).get('duration', 3)
 	)
 
-	fadeTo(0)
+	transitionOut(
+		themeConfig.get('splash', {}).get('transition', 'fade')
+	)
 
 	displayGroup.remove(
 		splashGrid
@@ -255,7 +265,9 @@ displayGroup.append(
 
 setPage(currentPage)
 
-fadeTo(1)
+transitionIn(
+	themeConfig.get('splash', {}).get('transition', 'cut')
+)
 
 # main loop
 while True:
@@ -278,7 +290,9 @@ while True:
 			buttonPage = previousButton.get('page', None)
 
 			if buttonPage is not None:
-				transitionOut()
+				transitionOut(
+					themeConfig.get('transitionType', None)
+				)
 
 				# perform a pagination action if pagination is enabled
 				if buttonPage in ['prev', 'previous']:
@@ -288,7 +302,9 @@ while True:
 				elif type(buttonPage) is int:
 					setPage(buttonPage)
 
-				transitionIn()
+				transitionIn(
+					themeConfig.get('transitionType', None)
+				)
 
 		previousButton = None
 		timeTouched = None
