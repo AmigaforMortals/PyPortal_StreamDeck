@@ -30,6 +30,9 @@ def refreshDisplay():
 
 	board.DISPLAY.refresh()
 
+def refreshAfterTileUpdate():
+	return int(themeConfig.get('displayRefreshMode', 'page') == 'tile')
+
 def getCurrentTouch():
 	time.sleep(0.05)
 	touch = touchScreen.touch_point
@@ -112,13 +115,13 @@ def fadeOut(step = 0.1, speed = 0.05):
 		setBacklight(board.DISPLAY.brightness - step)
 		time.sleep(speed)
 
-def setTile(touch, state = 0, refreshAfterUpdate = 1):
+def setTile(touch, state = 0):
 	if type(touch['x']) is int and type(touch['y']) is int:
 		i = (touch['y'] * getPageColumns()) + touch['x']
 		btn = themeConfig['pages'][currentPage][touch['y']][touch['x']]["button"]
 		btnGrid[i] = themeConfig['buttons'][btn][state]
 
-		if refreshAfterUpdate:
+		if refreshAfterTileUpdate():
 			refreshDisplay()
 
 def setPage(index, refreshAfterUpdate = 1):
@@ -135,13 +138,13 @@ def setPage(index, refreshAfterUpdate = 1):
 
 	for tileY in range(0, getPageRows()):
 		for tileX in range(0, getPageColumns()):
-			setTile(
-				{
-					'x': tileX,
-					'y': tileY
-				},
-				refreshAfterUpdate = refreshAfterUpdate
-			)
+			setTile({
+				'x': tileX,
+				'y': tileY
+			})
+
+	if not refreshAfterTileUpdate():
+		refreshDisplay()
 
 def prevPage():
 	if currentPage > 0:
@@ -156,7 +159,7 @@ def nextPage():
 		setPage(0)
 
 def displaySplashScreen():
-	if themeConfig.get('images', {}).get('splash', None) is None:
+	if themeConfig.get('splash', None) is None:
 		return
 
 	if debugging:
@@ -168,7 +171,7 @@ def displaySplashScreen():
 	transitionSpeed = themeConfig.get('transitionSpeed', 0.05)
 
 	splash = displayio.OnDiskBitmap(
-		imgPath + themeConfig.get('images', {}).get('splash', 'Splash.bmp')
+		imgPath + themeConfig.get('splash', {}).get('image', 'Splash.bmp')
 	)
 
 	splashGrid = displayio.TileGrid(
@@ -187,7 +190,9 @@ def displaySplashScreen():
 		transitionSpeed
 	)
 
-	time.sleep(3)
+	time.sleep(
+		themeConfig.get('splash', {}).get('duration', 3)
+	)
 
 	fadeOut(
 		transitionStep,
@@ -200,8 +205,8 @@ def displaySplashScreen():
 
 	refreshDisplay()
 
-# Turn the auto refreshing of the dispaly on/off
-board.DISPLAY.auto_refresh = bool(themeConfig.get('autoRefresh', True))
+# Turn off display auto refreshing
+board.DISPLAY.auto_refresh = 0
 
 # Initialise touchscreen
 touchScreen = adafruit_touchscreen.Touchscreen(

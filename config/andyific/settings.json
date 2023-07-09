@@ -1,8 +1,8 @@
 {
-	"autoRefresh": 0,
+	"displayRefreshMode": "tile",
 
 	"images": {
-		"buttons": "buttons.bmp"
+		"buttons": "streaming-buttons.bmp"
 	},
 
 	"buttons": {

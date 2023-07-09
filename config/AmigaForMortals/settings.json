@@ -1,6 +1,7 @@
 {
-	"images": {
-		"splash": "Splash.bmp"
+	"splash": {
+		"image": "Splash.bmp"
+		"duration": 5
 	},
 
 	"buttons": {
