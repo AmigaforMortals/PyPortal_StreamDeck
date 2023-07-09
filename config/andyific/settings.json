@@ -1,6 +1,10 @@
 {
 	"displayRefreshMode": "tile",
 
+	"idle": {
+		"duration": 150
+	},
+
 	"images": {
 		"buttons": "streaming-buttons.bmp"
 	},

@@ -33,6 +33,14 @@ def refreshDisplay():
 def refreshAfterTileUpdate():
 	return int(themeConfig.get('displayRefreshMode', 'page') == 'tile')
 
+def isIdle():
+	idleDuration = themeConfig.get('idle', {}).get('duration', None)
+
+	if idleDuration is None or currentTime < (timeStateChanged + idleDuration):
+		return 0
+
+	return 1
+
 def getCurrentTouch():
 	time.sleep(0.05)
 	touch = touchScreen.touch_point
@@ -225,6 +233,7 @@ previousTouch = currentTouch
 currentButton = None
 previousButton = None
 timeTouched = None
+idleMode = 0
 
 btns = displayio.OnDiskBitmap(
 	imgPath + themeConfig.get('images', {}).get('buttons', 'Buttons.bmp')
@@ -269,6 +278,8 @@ transitionIn(
 	themeConfig.get('splash', {}).get('transition', 'cut')
 )
 
+timeStateChanged = time.monotonic()
+
 # main loop
 while True:
 	currentTime = time.monotonic()
@@ -278,6 +289,33 @@ while True:
 
 	# get the current touch state
 	currentTouch = getCurrentTouch()
+
+	# check & handle entering/exiting idle state
+	if isIdle():
+		if not idleMode and currentTouch['x'] is None and currentTouch['y'] is None:
+			if debugging:
+				print('Entering idle mode')
+
+			idleMode = 1
+
+			transitionOut(
+				themeConfig.get('idle', {}).get('transition', 'fade')
+			)
+
+			continue
+		elif idleMode and type(previousTouch['x']) is int and type(previousTouch['y']) is int:
+			if debugging:
+				print('Exiting idle mode')
+
+			idleMode = 0
+
+			transitionIn(
+				themeConfig.get('idle', {}).get('transition', 'fade')
+			)
+
+			timeStateChanged = currentTime
+
+			continue
 
 	# check button up - reset stuff when the touch has been released
 	if previousTouch != currentTouch and type(previousTouch['x']) is int and type(previousTouch['y']) is int:
@@ -311,6 +349,8 @@ while True:
 
 	# check button down - trigger actions when current/previous touches match (helps to filter out inconsistencies)
 	elif previousTouch == currentTouch and type(currentTouch['x']) is int and type(currentTouch['y']) is int:
+		timeStateChanged = currentTime
+
 		if timeTouched is None:
 			timeTouched = currentTime
 
