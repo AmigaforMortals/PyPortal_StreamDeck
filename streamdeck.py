@@ -62,6 +62,18 @@ def getCurrentButton():
 def getKeyCode(value):
 	return getattr(Keycode, value)
 
+def sendKeyCodes(keyCodes):
+	if keyCodes is None:
+		return
+	elif type(keyCodes) is list:
+		keyboard.send(
+			*map(getKeyCode, keyCodes)
+		)
+	elif type(keyCodes) is str:
+		keyboard.send(
+			getKeyCode(keyCodes)
+		)
+
 def getPageRows():
 	return len(themeConfig['pages'][currentPage])
 
@@ -302,12 +314,20 @@ while True:
 				themeConfig.get('idle', {}).get('transition', 'fade')
 			)
 
+			sendKeyCodes(
+				themeConfig.get('idle', {}).get('keyCodes', {}).get('enter', None)
+			)
+
 			continue
 		elif idleMode and type(previousTouch['x']) is int and type(previousTouch['y']) is int:
 			if debugging:
 				print('Exiting idle mode')
 
 			idleMode = 0
+
+			sendKeyCodes(
+				themeConfig.get('idle', {}).get('keyCodes', {}).get('exit', None)
+			)
 
 			transitionIn(
 				themeConfig.get('idle', {}).get('transition', 'fade')
@@ -375,17 +395,11 @@ while True:
 			1
 		)
 
-		# get the button's keys
-		buttonKeyCodes = currentButton.get('keyCodes', None)
+		# send the button's defined keys
+		sendKeyCodes(
+			currentButton.get('keyCodes', None)
+		)
 
-		if type(buttonKeyCodes) is list:
-			keyboard.send(
-				*map(getKeyCode, buttonKeyCodes)
-			)
-		elif type(buttonKeyCodes) is str:
-			keyboard.send(
-				getKeyCode(buttonKeyCodes)
-			)
 
 		# make a note of what button we've just used
 		previousButton = currentButton
